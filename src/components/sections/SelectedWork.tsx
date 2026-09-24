@@ -101,12 +101,12 @@ export const SelectedWork: React.FC = () => {
 
       if (isMobile) {
         pts1 = [
-          { x: -width * 0.25, y: height * 0.05 + Math.sin(time * 0.5) * 20 },
+          { x: -width * 0.45, y: height * 0.05 + Math.sin(time * 0.5) * 20 },
           { x: width * 0.85 + nx * 20, y: height * 0.22 + Math.cos(time * 0.6) * 25 + ny * 20 },
           { x: width * 1.25, y: height * 0.42 + Math.sin(time * 0.7) * 25 },
           { x: width * 0.15 - nx * 20, y: height * 0.62 + Math.cos(time * 0.6) * 25 - ny * 18 },
           { x: width * 0.85 + nx * 20, y: height * 0.82 + Math.sin(time * 0.7) * 25 },
-          { x: width * 1.25, y: height * 0.98 + Math.cos(time * 0.5) * 20 },
+          { x: width * 1.45, y: height * 0.98 + Math.cos(time * 0.5) * 20 },
         ];
 
         pts2 = pts1.map((pt, i) => ({
@@ -115,12 +115,12 @@ export const SelectedWork: React.FC = () => {
         }));
       } else {
         pts1 = [
-          { x: -width * 0.15, y: height * 0.06 + Math.sin(time * 0.5) * 35 },
+          { x: -width * 0.40, y: height * 0.06 + Math.sin(time * 0.5) * 35 },
           { x: width * 0.25 + nx * 20, y: height * 0.22 + Math.cos(time * 0.6) * 45 - ny * 20 },
           { x: width * 0.68, y: height * 0.40 + Math.sin(time * 0.7) * 40 + ny * 25 },
           { x: width * 0.88 + nx * 25, y: height * 0.62 + Math.cos(time * 0.6) * 45 },
           { x: width * 0.45, y: height * 0.80 + Math.sin(time * 0.7) * 40 - ny * 25 },
-          { x: width * 1.15, y: height * 0.95 + Math.cos(time * 0.5) * 35 },
+          { x: width * 1.40, y: height * 0.95 + Math.cos(time * 0.5) * 35 },
         ];
 
         pts2 = pts1.map((pt, i) => ({

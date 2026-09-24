@@ -120,13 +120,13 @@ export const Positioning: React.FC = () => {
       if (isMobile) {
         // Mobile vertical weaving flow: enters and exits viewport edges
         pts1 = [
-          { x: width * 1.25, y: height * 0.04 + Math.sin(time * 0.5) * 20 },
+          { x: width * 1.45, y: height * 0.04 + Math.sin(time * 0.5) * 20 },
           { x: width * 0.20 - nx * 20, y: height * 0.18 + Math.cos(time * 0.6) * 25 + ny * 20 },
           { x: -width * 0.25, y: height * 0.36 + Math.sin(time * 0.7) * 20 },
           { x: width * 0.85 + nx * 25, y: height * 0.54 + Math.cos(time * 0.6) * 25 },
           { x: width * 1.25, y: height * 0.72 + Math.sin(time * 0.7) * 20 },
           { x: width * 0.20 - nx * 20, y: height * 0.88 + Math.cos(time * 0.6) * 25 + ny * 20 },
-          { x: -width * 0.20, y: height * 0.98 + Math.sin(time * 0.5) * 20 },
+          { x: -width * 0.45, y: height * 0.98 + Math.sin(time * 0.5) * 20 },
         ];
 
         pts2 = pts1.map((pt, i) => ({
@@ -135,23 +135,23 @@ export const Positioning: React.FC = () => {
         }));
       } else {
         pts1 = [
-          { x: width * 1.18, y: height * 0.02 + Math.sin(time * 0.5) * 30 },
+          { x: width * 1.40, y: height * 0.02 + Math.sin(time * 0.5) * 30 },
           { x: width * 0.76 + nx * 20, y: height * 0.12 + Math.cos(time * 0.6) * 45 + ny * 25 },
           { x: width * 0.40, y: height * 0.28 + Math.sin(time * 0.7) * 40 - ny * 20 },
           { x: width * 0.18 + nx * 25, y: height * 0.50 + Math.cos(time * 0.6) * 45 },
           { x: width * 0.48, y: height * 0.70 + Math.sin(time * 0.7) * 40 - ny * 25 },
           { x: width * 0.82 + nx * 20, y: height * 0.86 + Math.cos(time * 0.6) * 45 + ny * 20 },
-          { x: width * 1.18, y: height * 0.98 + Math.sin(time * 0.5) * 30 },
+          { x: width * 1.40, y: height * 0.98 + Math.sin(time * 0.5) * 30 },
         ];
 
         pts2 = [
-          { x: width * 1.18, y: height * 0.02 - 15 + Math.cos(time * 0.6) * 25 },
+          { x: width * 1.40, y: height * 0.02 - 15 + Math.cos(time * 0.6) * 25 },
           { x: width * 0.74 + nx * 25, y: height * 0.12 - 15 + Math.sin(time * 0.7) * 35 + ny * 20 },
           { x: width * 0.42, y: height * 0.28 - 15 + Math.cos(time * 0.6) * 35 - ny * 15 },
           { x: width * 0.20 + nx * 25, y: height * 0.50 - 15 + Math.sin(time * 0.7) * 35 },
           { x: width * 0.50, y: height * 0.70 - 15 + Math.cos(time * 0.6) * 35 - ny * 20 },
           { x: width * 0.80 + nx * 20, y: height * 0.86 - 15 + Math.sin(time * 0.7) * 35 + ny * 15 },
-          { x: width * 1.18, y: height * 0.98 - 15 + Math.cos(time * 0.5) * 25 },
+          { x: width * 1.40, y: height * 0.98 - 15 + Math.cos(time * 0.5) * 25 },
         ];
       }
 

@@ -70,7 +70,7 @@ export const Footer: React.FC = () => {
             {/* Social Icons Directly Under Brand Info */}
             <div className="pt-1 flex items-center gap-3">
               <a
-                href="https://twitter.com"
+                href="https://x.com/wavecrestsolutions"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Twitter / X"
@@ -80,7 +80,7 @@ export const Footer: React.FC = () => {
               </a>
 
               <a
-                href="https://linkedin.com"
+                href="https://linkedin.com/company/wavecrestsolutions"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
@@ -90,7 +90,7 @@ export const Footer: React.FC = () => {
               </a>
 
               <a
-                href="https://github.com"
+                href="https://github.com/wavecrestsolutions"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
@@ -100,7 +100,7 @@ export const Footer: React.FC = () => {
               </a>
 
               <a
-                href="https://instagram.com"
+                href="https://instagram.com/wavecrestsolutions"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"

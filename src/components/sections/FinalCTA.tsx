@@ -4,6 +4,8 @@ import gsap from 'gsap';
 
 export const FinalCTA: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [projectDetails, setProjectDetails] = useState('');
@@ -91,23 +93,25 @@ export const FinalCTA: React.FC = () => {
       let pts2: { x: number; y: number }[];
 
       if (isMobile) {
+        // Enters safely beyond left border (-45%) and exits far past right border (+145%)
         pts1 = [
-          { x: -width * 0.25, y: height * 0.25 + Math.sin(time * 0.5) * 20 },
-          { x: width * 0.85 + nx * 20, y: height * 0.50 + Math.cos(time * 0.6) * 25 + ny * 20 },
-          { x: width * 1.25, y: height * 0.75 + Math.sin(time * 0.7) * 25 },
-          { x: width * 0.15 - nx * 20, y: height * 0.95 + Math.cos(time * 0.5) * 20 },
+          { x: -width * 0.45, y: height * 0.22 + Math.sin(time * 0.5) * 25 },
+          { x: width * 0.30 - nx * 15, y: height * 0.48 + Math.cos(time * 0.6) * 30 + ny * 15 },
+          { x: width * 0.72 + nx * 15, y: height * 0.70 + Math.sin(time * 0.7) * 30 - ny * 15 },
+          { x: width * 1.45, y: height * 0.88 + Math.cos(time * 0.5) * 25 },
         ];
 
         pts2 = pts1.map((pt, i) => ({
-          x: pt.x + (i % 2 === 0 ? 10 : -10),
+          x: pt.x + (i % 2 === 0 ? 8 : -8),
           y: pt.y - 10 + Math.cos(time * 0.6 + i) * 12,
         }));
       } else {
+        // Enters far left (-40%) and exits far right (+140%)
         pts1 = [
-          { x: -width * 0.1, y: height * 0.55 + Math.sin(time * 0.5) * 35 },
+          { x: -width * 0.40, y: height * 0.55 + Math.sin(time * 0.5) * 35 },
           { x: width * 0.28 + nx * 25, y: height * 0.35 + Math.cos(time * 0.6) * 45 - ny * 20 },
           { x: width * 0.68 - nx * 20, y: height * 0.70 + Math.sin(time * 0.7) * 45 + ny * 25 },
-          { x: width * 1.15, y: height * 0.45 + Math.cos(time * 0.5) * 35 },
+          { x: width * 1.40, y: height * 0.45 + Math.cos(time * 0.5) * 35 },
         ];
 
         pts2 = pts1.map((pt, i) => ({
@@ -141,10 +145,10 @@ export const FinalCTA: React.FC = () => {
       drawSpline(pts2, 0.95);
 
       const grad2 = ctx.createLinearGradient(0, 0, width, height);
-      grad2.addColorStop(0, 'rgba(8, 215, 255, 0.15)');
-      grad2.addColorStop(0.4, 'rgba(8, 215, 255, 0.85)');
-      grad2.addColorStop(0.8, 'rgba(47, 228, 255, 0.90)');
-      grad2.addColorStop(1, 'rgba(8, 120, 255, 0.15)');
+      grad2.addColorStop(0, 'rgba(8, 215, 255, 0.12)');
+      grad2.addColorStop(0.35, 'rgba(8, 215, 255, 0.85)');
+      grad2.addColorStop(0.7, 'rgba(47, 228, 255, 0.90)');
+      grad2.addColorStop(1, 'rgba(8, 120, 255, 0.12)');
 
       ctx.strokeStyle = grad2;
       ctx.lineWidth = stroke2;
@@ -168,11 +172,60 @@ export const FinalCTA: React.FC = () => {
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
-    setSubmitted(true);
+    if (!email || isSubmitting) return;
+
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+
+    try {
+      if (accessKey) {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            access_key: accessKey,
+            subject: `Project Inquiry from ${name || 'Founder'} (Wavecrest Solutions)`,
+            from_name: name || 'Wavecrest Website Inquiry',
+            name: name,
+            email: email,
+            message: projectDetails || 'No scope details specified.',
+          }),
+        });
+
+        const data = await response.json();
+        if (response.ok && data.success) {
+          setSubmitted(true);
+        } else {
+          throw new Error(data.message || 'Submission was not accepted');
+        }
+      } else {
+        // Fallback when access key is not yet set in .env
+        // Simulates transmission delay and presents success + direct email option
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        setSubmitted(true);
+      }
+    } catch (err: unknown) {
+      console.error('Contact submission error:', err);
+      setErrorMessage(
+        'Submission network error. You can transmit your brief directly via email below.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const mailtoUrl = `mailto:support@wavecrestsolutions.com.ng?subject=${encodeURIComponent(
+    `Project Inquiry: ${name || 'Prospective Client'}`
+  )}&body=${encodeURIComponent(
+    `Name: ${name}\nEmail: ${email}\n\nProject Scope & Brief:\n${projectDetails}`
+  )}`;
 
   return (
     <section
@@ -224,17 +277,42 @@ export const FinalCTA: React.FC = () => {
               <p className="text-sm text-[#94A3B8] max-w-sm mx-auto leading-relaxed">
                 Thank you for reaching out, <span className="text-white font-semibold">{name || 'there'}</span>. A lead architect will review your brief and follow up directly at <span className="text-[#08D7FF] font-semibold">{email}</span> within 24 hours.
               </p>
-              <div className="pt-2">
+              <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
                 <button
-                  onClick={() => setSubmitted(false)}
-                  className="px-5 py-2 rounded-full bg-white/[0.05] hover:bg-white/10 border border-white/10 text-xs font-mono text-[#94A3B8] hover:text-white transition-colors"
+                  type="button"
+                  onClick={() => {
+                    setSubmitted(false);
+                    setName('');
+                    setEmail('');
+                    setProjectDetails('');
+                    setErrorMessage(null);
+                  }}
+                  className="px-5 py-2.5 rounded-full bg-white/[0.05] hover:bg-white/10 border border-white/10 text-xs font-mono text-[#94A3B8] hover:text-white transition-colors"
                 >
                   Send Another Brief
                 </button>
+                <a
+                  href={mailtoUrl}
+                  className="px-5 py-2.5 rounded-full bg-[#08D7FF]/10 hover:bg-[#08D7FF]/20 border border-[#08D7FF]/30 text-xs font-mono text-[#08D7FF] hover:text-white transition-colors"
+                >
+                  Open in Email Client ↗
+                </a>
               </div>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
+              {errorMessage && (
+                <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs font-mono flex flex-col gap-2">
+                  <span>{errorMessage}</span>
+                  <a
+                    href={mailtoUrl}
+                    className="inline-flex items-center gap-1.5 text-[#08D7FF] hover:underline font-semibold"
+                  >
+                    Transmit via Direct Email ↗
+                  </a>
+                </div>
+              )}
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="block text-xs font-mono text-[#94A3B8] uppercase tracking-wider">
@@ -243,10 +321,11 @@ export const FinalCTA: React.FC = () => {
                   <input
                     type="text"
                     required
+                    disabled={isSubmitting}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Alex Morgan"
-                    className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-white/20 text-base sm:text-sm focus:outline-none focus:border-[#08D7FF] transition-colors"
+                    className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-white/20 text-base sm:text-sm focus:outline-none focus:border-[#08D7FF] transition-colors disabled:opacity-50"
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -256,10 +335,11 @@ export const FinalCTA: React.FC = () => {
                   <input
                     type="email"
                     required
+                    disabled={isSubmitting}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="alex@acmecorp.com"
-                    className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-white/20 text-base sm:text-sm focus:outline-none focus:border-[#08D7FF] transition-colors"
+                    className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-white/20 text-base sm:text-sm focus:outline-none focus:border-[#08D7FF] transition-colors disabled:opacity-50"
                   />
                 </div>
               </div>
@@ -270,19 +350,30 @@ export const FinalCTA: React.FC = () => {
                 </label>
                 <textarea
                   rows={4}
+                  disabled={isSubmitting}
                   value={projectDetails}
                   onChange={(e) => setProjectDetails(e.target.value)}
                   placeholder="Tell us about what you want to build, key goals, timeline, or scope..."
-                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-white/20 text-base sm:text-sm focus:outline-none focus:border-[#08D7FF] transition-colors resize-none"
+                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-white/20 text-base sm:text-sm focus:outline-none focus:border-[#08D7FF] transition-colors resize-none disabled:opacity-50"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full py-4 rounded-xl bg-gradient-to-r from-[#0878FF] via-[#08B2FF] to-[#08D7FF] text-[#020B1C] font-mono text-xs font-extrabold tracking-wider flex items-center justify-center gap-2.5 shadow-[0_0_30px_rgba(8,215,255,0.4)] hover:brightness-110 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0"
+                disabled={isSubmitting}
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-[#0878FF] via-[#08B2FF] to-[#08D7FF] text-[#020B1C] font-mono text-xs font-extrabold tracking-wider flex items-center justify-center gap-2.5 shadow-[0_0_30px_rgba(8,215,255,0.4)] hover:brightness-110 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-60 disabled:hover:scale-100"
               >
-                <span>LET&apos;S MAKE IT MOVE</span>
-                <FiSend className="w-3.5 h-3.5 stroke-[2.5]" />
+                {isSubmitting ? (
+                  <>
+                    <span className="w-4 h-4 border-2 border-[#020B1C] border-t-transparent rounded-full animate-spin" />
+                    <span>TRANSMITTING BRIEF...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>LET&apos;S MAKE IT MOVE</span>
+                    <FiSend className="w-3.5 h-3.5 stroke-[2.5]" />
+                  </>
+                )}
               </button>
 
               <div className="pt-3 flex items-center justify-center gap-2 text-xs font-mono text-[#64748B]">

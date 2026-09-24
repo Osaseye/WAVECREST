@@ -128,10 +128,10 @@ export const About: React.FC = () => {
         }));
       } else {
         pts1 = [
-          { x: -width * 0.35, y: height * 0.45 + Math.sin(time * 0.5) * 30 },
+          { x: -width * 0.45, y: height * 0.45 + Math.sin(time * 0.5) * 30 },
           { x: width * 0.35 + nx * 20, y: height * 0.65 + Math.cos(time * 0.6) * 35 - ny * 15 },
           { x: width * 0.70 - nx * 15, y: height * 0.35 + Math.sin(time * 0.7) * 35 + ny * 20 },
-          { x: width * 1.35, y: height * 0.55 + Math.cos(time * 0.5) * 30 },
+          { x: width * 1.45, y: height * 0.55 + Math.cos(time * 0.5) * 30 },
         ];
 
         pts2 = pts1.map((pt, i) => ({

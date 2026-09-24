@@ -109,11 +109,11 @@ export const WaveRibbon: React.FC<WaveRibbonProps> = ({
         // out right, sweeps back in across lower half, and exits
         // =========================================================
         pts1 = [
-          { x: -width * 0.25, y: height * 0.16 + Math.sin(time * 0.6) * 22 },
+          { x: -width * 0.45, y: height * 0.16 + Math.sin(time * 0.6) * 22 },
           { x: width * 0.85 + nx * 20, y: height * 0.36 + Math.cos(time * 0.8) * 30 + ny * 20 },
           { x: width * 1.25, y: height * 0.56 + Math.sin(time * 0.7) * 25 },
           { x: width * 0.20 - nx * 20, y: height * 0.76 + Math.cos(time * 0.6) * 30 - ny * 18 },
-          { x: width * 1.20, y: height * 0.96 + Math.sin(time * 0.5) * 25 },
+          { x: width * 1.45, y: height * 0.96 + Math.sin(time * 0.5) * 25 },
         ];
 
         pts2 = pts1.map((pt, i) => ({
@@ -125,19 +125,19 @@ export const WaveRibbon: React.FC<WaveRibbonProps> = ({
         // DESKTOP HORIZONTAL CREST CURVATURE
         // =========================================================
         pts1 = [
-          { x: -width * 0.15, y: height * 0.62 + Math.sin(time * 0.6) * 35 },
+          { x: -width * 0.40, y: height * 0.62 + Math.sin(time * 0.6) * 35 },
           { x: width * 0.22, y: height * 0.34 + Math.sin(time * 0.8) * 45 - ny * 30 },
           { x: width * 0.54 + nx * 25, y: height * 0.65 + Math.cos(time * 0.7) * 40 + ny * 25 },
           { x: width * 0.82, y: height * 0.36 + Math.sin(time * 0.6) * 45 - ny * 20 },
-          { x: width * 1.15, y: height * 0.58 + Math.cos(time * 0.5) * 35 },
+          { x: width * 1.40, y: height * 0.58 + Math.cos(time * 0.5) * 35 },
         ];
 
         pts2 = [
-          { x: -width * 0.15, y: height * 0.56 + Math.cos(time * 0.7) * 30 },
+          { x: -width * 0.40, y: height * 0.56 + Math.cos(time * 0.7) * 30 },
           { x: width * 0.26, y: height * 0.30 + Math.cos(time * 0.8) * 40 + ny * 25 },
           { x: width * 0.56 + nx * 30, y: height * 0.58 + Math.sin(time * 0.7) * 35 - ny * 20 },
           { x: width * 0.85, y: height * 0.32 + Math.cos(time * 0.6) * 40 + ny * 20 },
-          { x: width * 1.15, y: height * 0.52 + Math.sin(time * 0.6) * 30 },
+          { x: width * 1.40, y: height * 0.52 + Math.sin(time * 0.6) * 30 },
         ];
       }
 
