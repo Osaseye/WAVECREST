@@ -179,7 +179,8 @@ export const FinalCTA: React.FC = () => {
     setIsSubmitting(true);
     setErrorMessage(null);
 
-    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+    const accessKey =
+      import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '79be5b7a-540d-4a30-9022-bd7e433dd1fc';
 
     try {
       if (accessKey) {
