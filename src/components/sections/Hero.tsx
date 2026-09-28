@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { WaveRibbon } from '../common/WaveRibbon';
 import { HiOutlineArrowUpRight } from 'react-icons/hi2';
 import gsap from 'gsap';
@@ -88,20 +89,20 @@ export const Hero: React.FC = () => {
 
         {/* Dual Actions - Stacks cleanly on mobile for thumb targets, side-by-side on desktop */}
         <div className="hero-fade-in flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4 w-full sm:w-auto">
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="group relative inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-gradient-to-r from-[#0878FF] via-[#08B2FF] to-[#08D7FF] text-[#020B1C] font-bold text-sm tracking-tight shadow-[0_0_30px_rgba(8,215,255,0.4)] hover:shadow-[0_0_45px_rgba(8,215,255,0.65)] transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0"
           >
             <span>Start a Project</span>
             <HiOutlineArrowUpRight className="w-4 h-4 stroke-[2.5] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
+          </Link>
 
-          <a
-            href="#work"
+          <Link
+            to="/systems"
             className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 hover:border-[#08D7FF]/50 text-[#F5F8FF] font-semibold text-sm tracking-tight transition-all duration-300 backdrop-blur-md"
           >
-            <span>See Selected Work</span>
-          </a>
+            <span>See Shipped Systems</span>
+          </Link>
         </div>
       </div>
     </section>

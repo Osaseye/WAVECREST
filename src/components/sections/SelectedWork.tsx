@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { projects, type Project } from '../../data/projects';
 import { ProjectVisualizer } from './work/ProjectVisualizer';
 import { CaseStudyModal } from './work/CaseStudyModal';
@@ -308,12 +309,12 @@ export const SelectedWork: React.FC = () => {
             </button>
           )}
 
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="px-8 py-3.5 rounded-full bg-gradient-to-r from-[#0878FF] to-[#08D7FF] text-[#020B1C] font-mono text-xs font-bold tracking-wider hover:brightness-110 shadow-[0_0_25px_rgba(8,215,255,0.35)] transition-all"
           >
             BUILD YOUR SYSTEM WITH US
-          </a>
+          </Link>
         </div>
 
       </div>

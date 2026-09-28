@@ -4,7 +4,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export const About: React.FC = () => {
+interface AboutProps {
+  showCanvas?: boolean;
+}
+
+export const About: React.FC<AboutProps> = ({ showCanvas = true }) => {
   const sectionRef = useRef<HTMLElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -32,9 +36,13 @@ export const About: React.FC = () => {
       }
     }, sectionRef);
 
+    if (!showCanvas) {
+      return () => ctx.revert();
+    }
+
     // 2. Continuous flowing ribbon canvas
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) return () => ctx.revert();
     const ctxCanvas = canvas.getContext('2d');
     if (!ctxCanvas) return;
 
@@ -196,38 +204,22 @@ export const About: React.FC = () => {
     <section
       ref={sectionRef}
       id="about"
-      className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-12 bg-[#020B1C] text-[#F5F8FF] overflow-hidden border-t border-white/[0.06]"
+      className="relative pt-12 sm:pt-16 pb-20 px-4 sm:px-6 lg:px-12 bg-transparent text-[#F5F8FF] overflow-hidden"
     >
       {/* Background Continuous Flowing Wave Canvas */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <canvas ref={canvasRef} className="w-full h-full opacity-65 transition-opacity duration-1000" />
-      </div>
+      {showCanvas && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <canvas ref={canvasRef} className="w-full h-full opacity-65 transition-opacity duration-1000" />
+        </div>
+      )}
 
       {/* Ambient Radial Depth */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#0878FF]/10 rounded-full blur-[190px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8">
-        {/* Floating Brand Mark Icon */}
-        <div className="about-reveal-item inline-flex justify-center">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 relative group">
-            <div className="absolute inset-0 bg-[#08D7FF]/25 rounded-full blur-2xl group-hover:bg-[#08D7FF]/40 transition-all duration-500" />
-            <img
-              src="/icon.png"
-              alt="Wavecrest Solutions"
-              className="w-full h-full object-contain filter drop-shadow-[0_10px_20px_rgba(8,215,255,0.4)]"
-            />
-          </div>
-        </div>
-
-        {/* Crisp Editorial Headline */}
+      <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
+        {/* Crisp Editorial Headline - No Floating Icon Above, Clean 2 Lines */}
         <div className="about-reveal-item space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-[#08D7FF]/25">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#08D7FF] animate-pulse" />
-            <span className="font-mono text-[11px] text-[#08D7FF] font-bold tracking-widest uppercase">
-              REGISTERED STUDIO // WAVECREST SOLUTIONS
-            </span>
-          </div>
-          <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-[1.08]">
+          <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-tight leading-[1.05]">
             BUILT FOR WHAT <br />
             <span className="bg-gradient-to-r from-[#F5F8FF] via-[#08D7FF] to-[#0878FF] bg-clip-text text-transparent">
               MOVES FORWARD.
@@ -236,44 +228,41 @@ export const About: React.FC = () => {
         </div>
 
         {/* Short, Direct Studio Notes */}
-        <div className="about-reveal-item max-w-2xl mx-auto space-y-4 text-base sm:text-lg text-[#94A3B8] leading-relaxed">
+        <div className="about-reveal-item max-w-2xl mx-auto space-y-4 text-base sm:text-xl text-[#94A3B8] leading-relaxed">
           <p>
-            Wavecrest Solutions is a duly registered digital engineering and technology studio. We partner directly with ambitious founders, growing businesses, and enterprise teams to turn complex ideas into production software that people love using.
-          </p>
-          <p className="text-white/80 font-medium">
-            Senior-led engineering. Direct partner access. Zero bureaucratic layers.
+            We are a software engineering studio based in Lagos, building custom digital platforms for businesses around the world. We work directly with founders and teams to turn ideas into fast, reliable software that people love using.
           </p>
         </div>
 
-        {/* Minimal 3-Pillar Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 max-w-3xl mx-auto text-left">
-          <div className="about-reveal-item p-5 rounded-2xl bg-[#06132D]/70 border border-white/10 backdrop-blur-xl">
-            <span className="text-[11px] font-mono text-[#08D7FF] font-semibold block uppercase">
-              Corporate Status
+        {/* Minimal Floating 3-Pillar Row (No Boxes) */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-8 max-w-3xl mx-auto text-left">
+          <div className="about-reveal-item space-y-1.5 pt-4 border-t border-white/15">
+            <span className="text-xs font-mono text-[#08D7FF] font-semibold block uppercase">
+              How We Work
             </span>
-            <h4 className="text-white text-sm font-bold mt-1">Registered Entity</h4>
-            <p className="text-xs text-[#94A3B8] mt-1 leading-relaxed">
-              Formally registered business operating under strict enterprise governance and IP protection.
+            <h4 className="text-white text-base font-bold">Direct Partnership</h4>
+            <p className="text-xs sm:text-sm text-[#94A3B8] leading-relaxed">
+              You collaborate directly with the engineers designing and building your product.
             </p>
           </div>
 
-          <div className="about-reveal-item p-5 rounded-2xl bg-[#06132D]/70 border border-white/10 backdrop-blur-xl">
-            <span className="text-[11px] font-mono text-[#08D7FF] font-semibold block uppercase">
-              Direct Access
+          <div className="about-reveal-item space-y-1.5 pt-4 border-t border-white/15">
+            <span className="text-xs font-mono text-[#08D7FF] font-semibold block uppercase">
+              Reliability
             </span>
-            <h4 className="text-white text-sm font-bold mt-1">Senior Architects</h4>
-            <p className="text-xs text-[#94A3B8] mt-1 leading-relaxed">
-              You collaborate directly with the lead engineers designing and building your system.
+            <h4 className="text-white text-base font-bold">Clean Code</h4>
+            <p className="text-xs sm:text-sm text-[#94A3B8] leading-relaxed">
+              Fast, well-tested code and solid databases designed to scale smoothly.
             </p>
           </div>
 
-          <div className="about-reveal-item p-5 rounded-2xl bg-[#06132D]/70 border border-white/10 backdrop-blur-xl">
-            <span className="text-[11px] font-mono text-[#08D7FF] font-semibold block uppercase">
-              Global Delivery
+          <div className="about-reveal-item space-y-1.5 pt-4 border-t border-white/15">
+            <span className="text-xs font-mono text-[#08D7FF] font-semibold block uppercase">
+              Reach
             </span>
-            <h4 className="text-white text-sm font-bold mt-1">Lagos &amp; Worldwide</h4>
-            <p className="text-xs text-[#94A3B8] mt-1 leading-relaxed">
-              Operating seamlessly across North America, Europe, and West Africa.
+            <h4 className="text-white text-base font-bold">Lagos &amp; Worldwide</h4>
+            <p className="text-xs sm:text-sm text-[#94A3B8] leading-relaxed">
+              Operating out of Lagos, delivering high-performance software globally.
             </p>
           </div>
         </div>
