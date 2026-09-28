@@ -40,19 +40,21 @@ export const OffersPage: React.FC = () => {
             Save on your next software build. Whether you are launching a business app or finishing your university final year project, get 15% off. Introduce a project and earn 10% cash in return.
           </p>
 
-          {/* Clean Segmented Toggle - Floating (No Heavy Outer Boxes) */}
-          <div className="mt-10 inline-flex p-1.5 rounded-full bg-white/[0.04] border border-white/15 backdrop-blur-xl">
+          {/* Clean Segmented Toggle - Slimmer, Sleeker, Fully Mobile Responsive */}
+          <div className="mt-8 sm:mt-10 w-full max-w-xl p-1 rounded-2xl sm:rounded-full bg-white/[0.04] border border-white/15 backdrop-blur-xl flex items-center justify-between gap-1 shadow-lg">
             <button
               onClick={() => setActiveTab('clients')}
-              className={`flex items-center gap-2.5 px-6 sm:px-8 py-3 rounded-full text-xs sm:text-sm font-display font-bold tracking-wide transition-all duration-300 ${
+              className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2.5 py-2 sm:py-3 px-2 sm:px-6 rounded-xl sm:rounded-full text-xs sm:text-sm font-display font-bold tracking-tight transition-all duration-300 text-center ${
                 activeTab === 'clients'
                   ? 'bg-gradient-to-r from-[#0878FF] to-[#08D7FF] text-[#020B1C] shadow-[0_0_20px_rgba(8,215,255,0.45)]'
                   : 'text-[#94A3B8] hover:text-white'
               }`}
             >
-              <HiOutlineBriefcase className="w-4 h-4" />
-              <span>For Businesses &amp; Founders</span>
-              <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-extrabold uppercase ${
+              <HiOutlineBriefcase className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+              <span className="truncate">
+                <span className="hidden sm:inline">For </span>Businesses &amp; Founders
+              </span>
+              <span className={`hidden xs:inline-block px-1.5 sm:px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono font-extrabold uppercase ${
                 activeTab === 'clients' ? 'bg-[#020B1C]/25 text-[#020B1C]' : 'bg-[#08D7FF]/20 text-[#08D7FF]'
               }`}>
                 15% OFF
@@ -61,20 +63,46 @@ export const OffersPage: React.FC = () => {
 
             <button
               onClick={() => setActiveTab('students')}
-              className={`flex items-center gap-2.5 px-6 sm:px-8 py-3 rounded-full text-xs sm:text-sm font-display font-bold tracking-wide transition-all duration-300 ${
+              className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2.5 py-2 sm:py-3 px-2 sm:px-6 rounded-xl sm:rounded-full text-xs sm:text-sm font-display font-bold tracking-tight transition-all duration-300 text-center ${
                 activeTab === 'students'
                   ? 'bg-gradient-to-r from-[#0878FF] to-[#08D7FF] text-[#020B1C] shadow-[0_0_20px_rgba(8,215,255,0.45)]'
                   : 'text-[#94A3B8] hover:text-white'
               }`}
             >
-              <HiOutlineAcademicCap className="w-4 h-4" />
-              <span>For University Students</span>
-              <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-extrabold uppercase ${
+              <HiOutlineAcademicCap className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+              <span className="truncate">
+                <span className="hidden sm:inline">For </span>University Students
+              </span>
+              <span className={`hidden xs:inline-block px-1.5 sm:px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono font-extrabold uppercase ${
                 activeTab === 'students' ? 'bg-[#020B1C]/25 text-[#020B1C]' : 'bg-[#08D7FF]/20 text-[#08D7FF]'
               }`}>
                 15% OFF
               </span>
             </button>
+          </div>
+
+          {/* High-Impact Promotional Hook: ₦50,000 Starter Website */}
+          <div className="mt-8 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#0878FF]/15 via-[#08D7FF]/10 to-transparent border border-[#08D7FF]/30 backdrop-blur-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-[0_10px_40px_rgba(8,215,255,0.08)]">
+            <div className="space-y-2 max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#08D7FF]/20 border border-[#08D7FF]/40 text-[#08D7FF] font-mono text-xs font-bold uppercase tracking-wider">
+                <span>⚡ Promotional Starter Tier</span>
+              </div>
+              <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight">
+                Get a website now for as low as <span className="text-[#08D7FF]">₦50,000</span>.
+              </h3>
+              <p className="text-sm sm:text-base text-[#94A3B8] leading-relaxed">
+                Need a clean, modern online presence right away? Launch a fast, mobile-responsive landing page or business showcase tailored to your brand, delivered within 48 to 72 hours with WhatsApp chat integration and domain setup.
+              </p>
+            </div>
+            <div className="flex-shrink-0 w-full sm:w-auto">
+              <button
+                onClick={() => navigate('/contact?promo=WEBSITE50K&plan=starter')}
+                className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-gradient-to-r from-[#0878FF] to-[#08D7FF] text-[#020B1C] font-bold text-sm tracking-tight hover:shadow-glow-cyan transition-all flex items-center justify-center gap-2"
+              >
+                <span>Claim ₦50,000 Website</span>
+                <FiArrowRight className="w-4 h-4 stroke-[2.5]" />
+              </button>
+            </div>
           </div>
         </div>
 

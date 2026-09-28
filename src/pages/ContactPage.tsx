@@ -9,6 +9,8 @@ export const ContactPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const initialPromo = searchParams.get('promo') || '';
   const initialType = searchParams.get('type') || '';
+  const initialPlan = searchParams.get('plan') || '';
+  const is50kPromo = initialPromo.toUpperCase() === 'WEBSITE50K' || initialPlan === 'starter';
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -18,11 +20,15 @@ export const ContactPage: React.FC = () => {
     initialType === 'student' ? 'student' : 'business'
   );
   const [projectCategory, setProjectCategory] = useState(
-    initialType === 'student' ? 'University Final Year Project' : 'Custom Web Platform'
+    is50kPromo
+      ? 'Starter One-Page Website (₦50,000 Promo)'
+      : initialType === 'student'
+      ? 'University Final Year Project'
+      : 'Custom Web Platform'
   );
   const [promoCode, setPromoCode] = useState(initialPromo);
-  const [budget, setBudget] = useState('₦250k - ₦500k');
-  const [timeline, setTimeline] = useState('1 - 2 Months');
+  const [budget, setBudget] = useState(is50kPromo ? '₦50k - ₦150k' : '₦250k - ₦500k');
+  const [timeline, setTimeline] = useState(is50kPromo ? 'Urgent (< 3 Weeks)' : '1 - 2 Months');
   const [details, setDetails] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -365,6 +371,7 @@ export const ContactPage: React.FC = () => {
                         </>
                       ) : (
                         <>
+                          <option value="Starter One-Page Website (₦50,000 Promo)">Starter One-Page Website (₦50,000 Promo)</option>
                           <option value="Custom Web Platform">Custom Web Platform</option>
                           <option value="Mobile App (iOS / Android)">Mobile App (iOS / Android)</option>
                           <option value="Fintech & Payments System">Fintech &amp; Payments System</option>
@@ -382,14 +389,16 @@ export const ContactPage: React.FC = () => {
                         Promo / Referral Code
                       </label>
                       {promoCode && (
-                        <span className="text-[10px] font-mono text-[#08D7FF] font-bold">15% APPLIED</span>
+                        <span className="text-[10px] font-mono text-[#08D7FF] font-bold">
+                          {promoCode.toUpperCase() === 'WEBSITE50K' ? '₦50K PROMO' : '15% APPLIED'}
+                        </span>
                       )}
                     </div>
                     <input
                       type="text"
                       value={promoCode}
                       onChange={(e) => setPromoCode(e.target.value)}
-                      placeholder="CLIENT15 / STUDENT15 / Referrer Name"
+                      placeholder="CLIENT15 / STUDENT15 / WEBSITE50K / Referrer"
                       className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-white/30 text-sm focus:outline-none focus:border-[#08D7FF] transition-colors"
                     />
                   </div>
@@ -414,6 +423,7 @@ export const ContactPage: React.FC = () => {
                         </>
                       ) : (
                         <>
+                          <option value="₦50k - ₦150k">₦50,000 - ₦150,000 (Starter Website Tier)</option>
                           <option value="₦250k - ₦500k">₦250k - ₦500k (Starter / MVP)</option>
                           <option value="₦500k - ₦1.5M">₦500k - ₦1.5M (Growth Stage)</option>
                           <option value="₦1.5M - ₦3.5M">₦1.5M - ₦3.5M (Full Platform)</option>

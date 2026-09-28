@@ -41,7 +41,7 @@ export const ServicesPage: React.FC = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Page Hero - Clean, Floating Typography (Single Line Heading, Layman-Friendly English, No Pills) */}
         <div className="max-w-4xl mb-16 sm:mb-20">
-          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-[-0.03em] leading-none whitespace-nowrap">
+          <h1 className="font-display text-3xl sm:text-5xl md:text-7xl font-extrabold text-white tracking-[-0.03em] leading-tight sm:leading-none break-words">
             WHAT WE DO.
           </h1>
           <p className="mt-5 text-lg sm:text-2xl text-[#94A3B8] font-normal leading-relaxed max-w-3xl">
